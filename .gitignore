@@ -1,0 +1,9 @@
+# Ignore node_modules directory
+Backend/SignUp/node_modules/
+
+# Ignore package.json and package-lock.json
+Backend/SignUp/package.json
+Backend/SignUp/package-lock.json
+
+# Ignore TypeScript configuration file
+Backend/SignUp/tsconfig.json
