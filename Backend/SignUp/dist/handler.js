@@ -32,6 +32,15 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const mysql = __importStar(require("mysql2/promise"));
@@ -47,7 +56,7 @@ const validateEmail = (email) => {
     return emailRegex.test(email);
 };
 // AWS API Gateway
-const handler = async (event) => {
+const handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const body = JSON.parse(event.body || '{}'); //request body (an object [username : "", password: "", email : ""])
         const { username, password, email } = body;
@@ -69,23 +78,23 @@ const handler = async (event) => {
                 body: JSON.stringify({ error: 'Invalid email format' }), //if the user didn't meet email format
             };
         }
-        const connection = await mysql.createConnection({
+        const connection = yield mysql.createConnection({
             host: process.env.RDS_ENDPOINT,
             user: process.env.RDS_USERNAME,
             password: process.env.RDS_PASSWORD,
             database: process.env.RDS_DATABASE_NAME,
         });
-        const [rows] = await connection.execute('SELECT * FROM users WHERE email = ?', [email]);
+        const [rows] = yield connection.execute('SELECT * FROM users WHERE email = ?', [email]);
         if (Array.isArray(rows) && rows.length > 0) { // Check if the email is already taken
-            await connection.end();
+            yield connection.end();
             return {
                 statusCode: 400,
                 body: JSON.stringify({ error: 'Email is already taken' }),
             };
         }
         const query = `INSERT INTO users (username, password, email) VALUES (?, ?, ?)`; //insert the new info to the database
-        await connection.execute(query, [username, password, email]);
-        await connection.end();
+        yield connection.execute(query, [username, password, email]);
+        yield connection.end();
         return {
             statusCode: 201,
             body: JSON.stringify({ message: 'User signed up successfully' }), // successful sign up
@@ -98,5 +107,5 @@ const handler = async (event) => {
             body: JSON.stringify({ error: 'Internal Server Error' }), //I hope this never occurs
         };
     }
-};
+});
 exports.handler = handler;
