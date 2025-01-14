@@ -28,7 +28,6 @@ export default function Homepage() {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="app/(tabs)/index.tsx" />
       <FolderCard jsonStructure = {fs} path = {pathEx}></FolderCard>
-      <FileItem fileName={'item'}></FileItem>
     </View>
   );
 }

@@ -20,13 +20,6 @@ interface File {
   name: string;
   id: string;
 }
-let getOutArray = (fs:  Array<File|Folder>) =>{
-  let outArrTemp: string[] = []
-  for(const item of fs){
-    outArrTemp.push(item.name)
-  }
-  return outArrTemp
-}
 
 function isFolder(item: File | Folder): item is Folder {
   return item.type === "Folder";
@@ -35,12 +28,7 @@ function isFolder(item: File | Folder): item is Folder {
 export default function FolderCard({ jsonStructure, path }: { jsonStructure: Array<File|Folder>; path: string[]}) {
   const [pathState, setPathState] = useState<string[]>(path);
   const [jsonState, setJsonState] = useState<Array<File|Folder>>(jsonStructure);
-  const [outArray, setOutArray] = useState<string[]>(getOutArray(jsonStructure));
   const jsFileSystem:  Array<File|Folder> = jsonStructure;
-
-  useEffect(()=>{
-    setOutArray(getOutArray(jsonState))
-  }, [jsonState])
 
   useEffect(() => {
     console.log("Path change initiated:", pathState);
