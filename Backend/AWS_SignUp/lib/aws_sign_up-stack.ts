@@ -9,8 +9,8 @@ export class AwsSignUpStack extends cdk.Stack {
     super(scope, id, props);
 
     const lambdaLayer = new lambda.LayerVersion(this, 'MysqlLayer', {
-      code: lambda.Code.fromAsset(path.join(__dirname, '../layers')), // Path to the directory containing the lambda-layer/nodejs
-      compatibleRuntimes: [lambda.Runtime.NODEJS_22_X], // Compatible runtimes
+      code: lambda.Code.fromAsset(path.join(__dirname, "../layers/signup-layer")), // Use the mysql-layer folder
+      compatibleRuntimes: [lambda.Runtime.NODEJS_22_X], // Compatible runtime
       description: 'A custom Lambda layer for mysql2 dependency',
     });
 
@@ -25,6 +25,7 @@ export class AwsSignUpStack extends cdk.Stack {
         RDS_PASSWORD: '#',
         RDS_DATABASE_NAME: '#',
       },
+      layers: [lambdaLayer], // Attach the Lambda layer here
     });
 
     // API Gateway

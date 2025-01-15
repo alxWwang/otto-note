@@ -30,6 +30,6 @@
     "cdk.out"
   ],
   "include":[
-    "src/lambda/*"
+    "src/lambda/Singup/*"
   ]
 }
