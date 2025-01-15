@@ -8,11 +8,17 @@ export class AwsSignUpStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    const lambdaLayer = new lambda.LayerVersion(this, 'MysqlLayer', {
+      code: lambda.Code.fromAsset(path.join(__dirname, '../layers')), // Path to the directory containing the lambda-layer/nodejs
+      compatibleRuntimes: [lambda.Runtime.NODEJS_22_X], // Compatible runtimes
+      description: 'A custom Lambda layer for mysql2 dependency',
+    });
+
     // Lambda Function
     const signupLambda = new lambda.Function(this, 'SignupLambda', {
       runtime: lambda.Runtime.NODEJS_22_X, // Node version 22
       handler: 'handler.handler',  // This should match the file and function name (signup-handler.ts -> handler function)
-      code: lambda.Code.fromAsset(path.join(__dirname, '../src/lambda')), // Path to the lambda folder
+      code: lambda.Code.fromAsset(path.join(__dirname, '../dist')), // Path to the lambda folder
       environment: {
         RDS_ENDPOINT: '#',
         RDS_USERNAME: '#',

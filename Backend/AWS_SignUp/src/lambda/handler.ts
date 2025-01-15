@@ -24,7 +24,7 @@ const validateEmail = (email: string): boolean => {
 };
 
 // AWS API Gateway
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler: APIGatewayProxyHandler = async (event: { body: any; }) => {
   try {
     const body: UserInput = JSON.parse(event.body || '{}'); //request body (an object [username : "", password: "", email : ""])
 
