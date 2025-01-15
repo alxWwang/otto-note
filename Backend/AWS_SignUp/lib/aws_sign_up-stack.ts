@@ -12,7 +12,7 @@ export class AwsSignUpStack extends cdk.Stack {
     const signupLambda = new lambda.Function(this, 'SignupLambda', {
       runtime: lambda.Runtime.NODEJS_22_X, // Node version 22
       handler: 'handler.handler',  // This should match the file and function name (signup-handler.ts -> handler function)
-      code: lambda.Code.fromAsset(path.join(__dirname, '../lambda')), // Path to the lambda folder
+      code: lambda.Code.fromAsset(path.join(__dirname, '../src/lambda')), // Path to the lambda folder
       environment: {
         RDS_ENDPOINT: '#',
         RDS_USERNAME: '#',
