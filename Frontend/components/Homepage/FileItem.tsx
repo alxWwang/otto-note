@@ -6,15 +6,23 @@ import { useRouter } from 'expo-router';
 
 const {width} = Dimensions.get("window")
 
+interface FileProps {
+  fileName:string,
+  content:string,
+  id:string
+}
+
 
 export default function FileItem({fileName}: {fileName:string}) {
   const router = useRouter();
 
   const handlePress = (fileName: string) => {
+    let content = "Sample content"
+    let id = "69"
     console.log("the folder "+ fileName + " is pressed!");
     router.push({
       pathname: '/Editor',
-      params: {fileName: fileName}
+      params: { fileName, content, id },
     });
   }
   return (

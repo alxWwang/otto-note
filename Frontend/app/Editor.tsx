@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import FolderItem from '@/components/Homepage/FolderItem';
-import { useLocalSearchParams } from 'expo-router/build/hooks';
+import { useLocalSearchParams, useSearchParams } from 'expo-router/build/hooks';
 
 interface FileProps {
   fileName:string,
@@ -13,10 +13,13 @@ interface FileProps {
 
 export default function Editor() {
 
-  const { fileName } = useLocalSearchParams();
+  const { fileName, content, id } = useLocalSearchParams();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{fileName}</Text>
+      <Text style={styles.title}>Content: {content}</Text>
+      <Text style={styles.title}>ID: {id}</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="app/(tabs)/yes.tsx" />
       
