@@ -18,25 +18,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies
-        run: |
-          npm install
-          npm install --save-dev typescript ts-node
-        working-directory: Backend/AWS_SignUp/
-
-      - name: Check ts-node installation
-        run: npm list ts-node
-        working-directory: Backend/AWS_SignUp/
-
-      - name: Build TypeScript
-        run: npm run build
-        working-directory: Backend/AWS_SignUp/
-
-      - name: Set permissions for CDK
-        run: chmod +x node_modules/.bin/cdk
-        working-directory: Backend/AWS_SignUp/
-
-      - name: Install AWS CDK globally
+      - name: Install AWS CDK
         run: npm install -g aws-cdk
 
       - name: Configure AWS Credentials
@@ -46,9 +28,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Bootstrap CDK app using ts-node
+      - name: Bootstrap CDK app
         run: |
-          npx ts-node --project tsconfig.json node_modules/aws-cdk/bin/cdk bootstrap
+          npx cdk bootstrap
         working-directory: Backend/AWS_SignUp/
 
       - name: Deploy AWS CDK Stack
@@ -57,5 +39,6 @@ jobs:
           export RDS_PASSWORD=${{ secrets.PASSWORD }}
           npx cdk deploy --require-approval never
         working-directory: Backend/AWS_SignUp/
+
 
 

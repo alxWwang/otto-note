@@ -1,0 +1,550 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "AwsSignUpStack": {
+        "id": "AwsSignUpStack",
+        "path": "AwsSignUpStack",
+        "children": {
+          "MysqlLayer": {
+            "id": "MysqlLayer",
+            "path": "AwsSignUpStack/MysqlLayer",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "AwsSignUpStack/MysqlLayer/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "AwsSignUpStack/MysqlLayer/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.175.1"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "AwsSignUpStack/MysqlLayer/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.175.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.175.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AwsSignUpStack/MysqlLayer/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
+                  "aws:cdk:cloudformation:props": {
+                    "compatibleRuntimes": [
+                      "nodejs22.x"
+                    ],
+                    "content": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "5724cf5e805db260ee18b1d498004af91057e15f04e75e60c04673af02cc5e0c.zip"
+                    },
+                    "description": "A custom Lambda layer for mysql2 dependency"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
+                  "version": "2.175.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.LayerVersion",
+              "version": "2.175.1"
+            }
+          },
+          "SignupLambda": {
+            "id": "SignupLambda",
+            "path": "AwsSignUpStack/SignupLambda",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "AwsSignUpStack/SignupLambda/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "AwsSignUpStack/SignupLambda/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.175.1"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AwsSignUpStack/SignupLambda/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.175.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.175.1"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "AwsSignUpStack/SignupLambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "AwsSignUpStack/SignupLambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.175.1"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "AwsSignUpStack/SignupLambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.175.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.175.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AwsSignUpStack/SignupLambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "bc0947edf4b977f406f613f3dd9c9b6e42d30fb83c2ef150a7babbb5a260433f.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "RDS_ENDPOINT": "",
+                        "RDS_USERNAME": "admin",
+                        "RDS_PASSWORD": "",
+                        "RDS_DATABASE_NAME": "otto"
+                      }
+                    },
+                    "handler": "handler.handler",
+                    "layers": [
+                      {
+                        "Ref": "MysqlLayerDC003E7C"
+                      }
+                    ],
+                    "role": {
+                      "Fn::GetAtt": [
+                        "SignupLambdaServiceRoleF717446F",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "nodejs22.x"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.175.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.175.1"
+            }
+          },
+          "UserSignupAPI": {
+            "id": "UserSignupAPI",
+            "path": "AwsSignUpStack/UserSignupAPI",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "AwsSignUpStack/UserSignupAPI/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "description": "API for user signup and management",
+                    "name": "User Signup API"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.175.1"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "AwsSignUpStack/UserSignupAPI/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AwsSignUpStack/UserSignupAPI/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "description": "API for user signup and management",
+                        "restApiId": {
+                          "Ref": "UserSignupAPI3C839687"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.175.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.175.1"
+                }
+              },
+              "DeploymentStage.prod": {
+                "id": "DeploymentStage.prod",
+                "path": "AwsSignUpStack/UserSignupAPI/DeploymentStage.prod",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AwsSignUpStack/UserSignupAPI/DeploymentStage.prod/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "deploymentId": {
+                          "Ref": "UserSignupAPIDeploymentFDF1596B0db652ace2aee1724301088ddc2a54f7"
+                        },
+                        "restApiId": {
+                          "Ref": "UserSignupAPI3C839687"
+                        },
+                        "stageName": "prod"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.175.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.175.1"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "AwsSignUpStack/UserSignupAPI/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.175.1"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "AwsSignUpStack/UserSignupAPI/Default",
+                "children": {
+                  "signup": {
+                    "id": "signup",
+                    "path": "AwsSignUpStack/UserSignupAPI/Default/signup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AwsSignUpStack/UserSignupAPI/Default/signup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
+                          "aws:cdk:cloudformation:props": {
+                            "parentId": {
+                              "Fn::GetAtt": [
+                                "UserSignupAPI3C839687",
+                                "RootResourceId"
+                              ]
+                            },
+                            "pathPart": "signup",
+                            "restApiId": {
+                              "Ref": "UserSignupAPI3C839687"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnResource",
+                          "version": "2.175.1"
+                        }
+                      },
+                      "POST": {
+                        "id": "POST",
+                        "path": "AwsSignUpStack/UserSignupAPI/Default/signup/POST",
+                        "children": {
+                          "ApiPermission.AwsSignUpStackUserSignupAPI3D63FCCF.POST..signup": {
+                            "id": "ApiPermission.AwsSignUpStackUserSignupAPI3D63FCCF.POST..signup",
+                            "path": "AwsSignUpStack/UserSignupAPI/Default/signup/POST/ApiPermission.AwsSignUpStackUserSignupAPI3D63FCCF.POST..signup",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "SignupLambda1B13FFC6",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:",
+                                      {
+                                        "Ref": "AWS::Region"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "AWS::AccountId"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "UserSignupAPI3C839687"
+                                      },
+                                      "/",
+                                      {
+                                        "Ref": "UserSignupAPIDeploymentStageprodFBAF9293"
+                                      },
+                                      "/POST/signup"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.175.1"
+                            }
+                          },
+                          "ApiPermission.Test.AwsSignUpStackUserSignupAPI3D63FCCF.POST..signup": {
+                            "id": "ApiPermission.Test.AwsSignUpStackUserSignupAPI3D63FCCF.POST..signup",
+                            "path": "AwsSignUpStack/UserSignupAPI/Default/signup/POST/ApiPermission.Test.AwsSignUpStackUserSignupAPI3D63FCCF.POST..signup",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "SignupLambda1B13FFC6",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:",
+                                      {
+                                        "Ref": "AWS::Region"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "AWS::AccountId"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "UserSignupAPI3C839687"
+                                      },
+                                      "/test-invoke-stage/POST/signup"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.175.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "AwsSignUpStack/UserSignupAPI/Default/signup/POST/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "authorizationType": "NONE",
+                                "httpMethod": "POST",
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:",
+                                        {
+                                          "Ref": "AWS::Region"
+                                        },
+                                        ":lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Fn::GetAtt": [
+                                            "SignupLambda1B13FFC6",
+                                            "Arn"
+                                          ]
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST"
+                                },
+                                "resourceId": {
+                                  "Ref": "UserSignupAPIsignupBEED7BA7"
+                                },
+                                "restApiId": {
+                                  "Ref": "UserSignupAPI3C839687"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.175.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.175.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Resource",
+                      "version": "2.175.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.175.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.RestApi",
+              "version": "2.175.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "AwsSignUpStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "AwsSignUpStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.175.1"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "AwsSignUpStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.175.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.2"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "AwsSignUpStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.175.1"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "AwsSignUpStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.175.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.175.1"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.4.2"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.175.1"
+    }
+  }
+}
