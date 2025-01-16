@@ -26,6 +26,8 @@ jobs:
           npm install
           npm install --save-dev typescript@latest
           npm install aws-cdk
+          npm install ts-node --save-dev
+
         working-directory: Backend/AWS_SignUp/
 
       # Set permissions for CDK (needed for CDK binary execution)
@@ -49,9 +51,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Bootstrap the AWS CDK app (prepare the environment for deployment)
-      - name: Bootstrapping CDK app
-        run: cdk bootstrap
+      - name: Build TypeScript
+        run: |
+          tsc
+        working-directory: Backend/AWS_SignUp/
+
+      - name: Bootstrap CDK app using ts-node
+        run: |
+          npx ts-node --project tsconfig.json node_modules/aws-cdk/bin/cdk bootstrap
         working-directory: Backend/AWS_SignUp/
 
       # Deploy the AWS CDK stack (no manual approval for changes)
