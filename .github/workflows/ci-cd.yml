@@ -23,10 +23,6 @@ jobs:
           npm install
         working-directory: Backend/AWS_SignUp/
 
-      - name: Install missing TypeScript types
-        run: |
-          npm install --save-dev @types/aws-lambda @types/babel__core @types/babel__generator @types/babel__template @types/babel__traverse @types/graceful-fs @types/istanbul-lib-coverage @types/istanbul-lib-report @types/istanbul-reports @types/jest @types/node @types/stack-utils @types/yargs @types/yargs-parser
-
       - name: Build TypeScript
         run: npm run build
         working-directory: Backend/AWS_SignUp/
