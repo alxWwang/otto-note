@@ -23,9 +23,8 @@
     "strictPropertyInitialization": false,
     "typeRoots": [
       "./node_modules/@types"
-    ]
-  },
-  "types": [
+    ],
+    "types": [
       "node",
       "jest",
       "aws-lambda",
@@ -42,12 +41,11 @@
       "yargs-parser"
     ]
   },
-  
   "exclude": [
     "node_modules",
     "cdk.out"
   ],
-  "include":[
+  "include": [
     "src/lambda/Singup/*"
   ]
 }
