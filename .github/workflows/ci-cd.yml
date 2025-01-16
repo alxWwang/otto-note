@@ -1,0 +1,41 @@
+name: Deploy AWS CDK Stack
+
+on:
+  push:
+    branches:
+      - aws_backend_init  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'  
+
+      - name: Install dependencies
+        run: |
+          npm install -g aws-cdk
+          npm install
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Bootstrap CDK environment
+        run: |
+          cdk bootstrap --profile default  # Bootstrap the environment if not already done
+
+      - name: Deploy AWS CDK Stack
+        run: |
+          export RDS_ENDPOINT=${{ secrets.ENDPOINT }}
+          export RDS_PASSWORD=${{ secrets.PASSWORD }}
+          cdk deploy --require-approval never
