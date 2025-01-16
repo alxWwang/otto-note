@@ -32,12 +32,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Bootstrapping CDK app
-      - name: bootStrap CDK app 
+      # Ensure `cdk` is in the path (with npx)
+      - name: Bootstrapping CDK app
         run: |
-          cdk bootstrap
+          npx cdk bootstrap
         working-directory: Backend/AWS_SignUp/
-
+        
       # Deploy AWS CDK Stack
       - name: Deploy AWS CDK Stack
         run: |
