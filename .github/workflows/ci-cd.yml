@@ -25,6 +25,10 @@ jobs:
         run: chmod +x node_modules/.bin/cdk
         working-directory: Backend/AWS_SignUp/
 
+      - name: Set permissions for ts-node
+        run: chmod +x node_modules/.bin/ts-node
+        working-directory: Backend/AWS_SignUp/
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
