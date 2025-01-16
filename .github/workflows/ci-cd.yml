@@ -24,6 +24,10 @@ jobs:
           npm install
         working-directory: Backend/AWS_SignUp/
 
+      - name: Set permissions for CDK
+        run: chmod +x node_modules/.bin/cdk
+        working-directory: Backend/AWS_SignUp/
+
       # Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -37,11 +41,11 @@ jobs:
         run: |
           npx cdk bootstrap
         working-directory: Backend/AWS_SignUp/
-        
+
       # Deploy AWS CDK Stack
       - name: Deploy AWS CDK Stack
         run: |
           export RDS_ENDPOINT=${{ secrets.ENDPOINT }}
           export RDS_PASSWORD=${{ secrets.PASSWORD }}
-          cdk deploy --require-approval never
+          npx cdk deploy --require-approval never
         working-directory: Backend/AWS_SignUp/
