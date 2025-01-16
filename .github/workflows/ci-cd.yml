@@ -34,9 +34,11 @@ jobs:
       - name: Bootstrap CDK environment
         run: |
           cdk bootstrap --profile default  # Bootstrap the environment if not already done
+        working-directory: Backend/AWS_SignUp/
 
       - name: Deploy AWS CDK Stack
         run: |
           export RDS_ENDPOINT=${{ secrets.ENDPOINT }}
           export RDS_PASSWORD=${{ secrets.PASSWORD }}
           cdk deploy --require-approval never
+        working-directory: Backend/AWS_SignUp/
