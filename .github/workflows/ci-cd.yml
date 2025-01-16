@@ -32,6 +32,10 @@ jobs:
       - name: Set permissions for CDK
         run: chmod +x node_modules/.bin/cdk
         working-directory: Backend/AWS_SignUp/
+      
+      - name: Set permissions for ts-node
+        run: chmod +x node_modules/.bin/ts-node
+        working-directory: Backend/AWS_SignUp/
 
       # Install AWS CDK globally (optional step to resolve any CDK issues)
       - name: Install AWS CDK globally
