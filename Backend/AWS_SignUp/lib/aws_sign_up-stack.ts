@@ -9,7 +9,7 @@ export class AwsSignUpStack extends cdk.Stack {
     super(scope, id, props);
 
     const lambdaLayer = new lambda.LayerVersion(this, 'MysqlLayer', {
-      code: lambda.Code.fromAsset(path.join(__dirname, "../layers/signup-layer")), // Use the mysql-layer folder
+      code: lambda.Code.fromAsset(path.join(__dirname, "..src/layers/signup-layer")), // Use the mysql-layer folder
       compatibleRuntimes: [lambda.Runtime.NODEJS_22_X], // Compatible runtime
       description: 'A custom Lambda layer for mysql2 dependency',
     });
@@ -20,13 +20,15 @@ export class AwsSignUpStack extends cdk.Stack {
       handler: 'handler.handler',  // This should match the file and function name (signup-handler.ts -> handler function)
       code: lambda.Code.fromAsset(path.join(__dirname, '../dist')), // Path to the lambda folder
       environment: {
-        RDS_ENDPOINT: '#',
-        RDS_USERNAME: '#',
-        RDS_PASSWORD: '#',
-        RDS_DATABASE_NAME: '#',
+        RDS_ENDPOINT: process.env.ENDPOINT || '',
+        RDS_USERNAME: 'admin',
+        RDS_PASSWORD: process.env.PASSWORD || '',
+        RDS_DATABASE_NAME: 'otto',
       },
       layers: [lambdaLayer], // Attach the Lambda layer here
     });
+
+
 
     // API Gateway
     const api = new apigateway.RestApi(this, 'UserSignupAPI', {
@@ -36,6 +38,8 @@ export class AwsSignUpStack extends cdk.Stack {
 
     const signup = api.root.addResource('signup');
     signup.addMethod('POST', new apigateway.LambdaIntegration(signupLambda)); // Integrate Lambda with API Gateway
+
+
   }
 }
 
