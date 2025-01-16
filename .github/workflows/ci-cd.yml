@@ -20,7 +20,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g aws-cdk
+          npm install -g aws-cdk ts-node
+          chmod +x $(npm bin -g)/ts-node
           npm install
         working-directory: Backend/AWS_SignUp/
 
@@ -30,7 +31,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-          aws-default-region: ${{secrets.AWS_DEFAULT_REGION}}
 
       - name: bootStrap CDK app 
         run: |
