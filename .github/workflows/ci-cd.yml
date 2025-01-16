@@ -20,8 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g aws-cdk ts-node
-          chmod +x $(npm bin -g)/ts-node
           npm install
         working-directory: Backend/AWS_SignUp/
 
