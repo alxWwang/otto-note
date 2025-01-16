@@ -31,9 +31,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Bootstrap CDK environment
+      - name: Synth CDK app
         run: |
-          cdk bootstrap
+          cdk synth
         working-directory: Backend/AWS_SignUp/
 
       - name: Deploy AWS CDK Stack
