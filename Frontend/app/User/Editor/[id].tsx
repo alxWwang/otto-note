@@ -27,6 +27,7 @@ export default function Editor() {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

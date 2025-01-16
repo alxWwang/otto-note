@@ -17,12 +17,11 @@ export default function FileItem({fileName}: {fileName:string}) {
   const router = useRouter();
 
   const handlePress = (fileName: string) => {
-    let content = "Sample content"
-    let id = "69"
+    let FileID = "69"
     console.log("the folder "+ fileName + " is pressed!");
     router.push({
-      pathname: '/Editor',
-      params: { fileName, content, id },
+      pathname: '/User/Editor/[id]',
+      params: {id: FileID},
     });
   }
   return (
