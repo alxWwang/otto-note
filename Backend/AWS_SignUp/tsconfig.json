@@ -23,29 +23,13 @@
     "strictPropertyInitialization": false,
     "typeRoots": [
       "./node_modules/@types"
-    ],
-    "types": [
-      "node",
-      "jest",
-      "aws-lambda",
-      "babel__core",
-      "babel__generator",
-      "babel__template",
-      "babel__traverse",
-      "graceful-fs",
-      "istanbul-lib-coverage",
-      "istanbul-lib-report",
-      "istanbul-reports",
-      "stack-utils",
-      "yargs",
-      "yargs-parser"
     ]
   },
   "exclude": [
     "node_modules",
     "cdk.out"
   ],
-  "include": [
+  "include":[
     "src/lambda/Singup/*"
   ]
 }
