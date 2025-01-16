@@ -13,22 +13,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22'  
+          node-version: '22'
 
       - name: Install dependencies
         run: |
           npm install
         working-directory: Backend/AWS_SignUp/
 
+      - name: Build TypeScript
+        run: npm run build
+        working-directory: Backend/AWS_SignUp/
+
       - name: Set permissions for CDK
         run: chmod +x node_modules/.bin/cdk
         working-directory: Backend/AWS_SignUp/
 
-      # Configure AWS Credentials
+      - name: Install AWS CDK globally (optional but can resolve issues)
+        run: npm install -g aws-cdk
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -36,16 +41,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Ensure `cdk` is in the path (with npx)
       - name: Bootstrapping CDK app
         run: |
           npx cdk bootstrap
         working-directory: Backend/AWS_SignUp/
 
-      # Deploy AWS CDK Stack
       - name: Deploy AWS CDK Stack
         run: |
           export RDS_ENDPOINT=${{ secrets.ENDPOINT }}
           export RDS_PASSWORD=${{ secrets.PASSWORD }}
           npx cdk deploy --require-approval never
         working-directory: Backend/AWS_SignUp/
+
