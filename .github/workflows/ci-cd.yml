@@ -47,7 +47,7 @@ jobs:
 
       # Bootstrap the AWS CDK app (prepare the environment for deployment)
       - name: Bootstrapping CDK app
-        run: npx cdk bootstrap
+        run: cdk bootstrap
         working-directory: Backend/AWS_SignUp/
 
       # Deploy the AWS CDK stack (no manual approval for changes)
