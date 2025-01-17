@@ -34,7 +34,7 @@ export class AwsSignUpStack extends cdk.Stack {
     const loginLambda = new lambda.Function(this, 'LoginLambda', {
       runtime: lambda.Runtime.NODEJS_22_X,
       handler: 'login.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../dist/Login')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../dist')),
       environment: {
         RDS_ENDPOINT: process.env.ENDPOINT || '',
         RDS_USERNAME: 'admin',
