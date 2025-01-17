@@ -1,5 +1,5 @@
-const signupHandler = require('../Singup'); 
-const loginHandler = require('../Login');   
+const signupHandler = require('./Singup/handler'); 
+const loginHandler = require('./Login/login');   
 
 // Main Lambda Handler
 exports.handler = async (event) => {
