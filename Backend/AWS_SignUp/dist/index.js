@@ -1,4 +1,4 @@
-const signupHandler = require('./SingUp'); 
+const signupHandler = require('./Singup'); 
 const loginHandler = require('./Login');   
 
 // Main Lambda Handler
