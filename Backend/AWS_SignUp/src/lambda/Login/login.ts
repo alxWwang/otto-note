@@ -2,9 +2,16 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import * as mysql from 'mysql2/promise';
 
 
+//Request Body
+interface UserInput {
+  password: string;
+  email: string;
+}
+
+
 export const handler: APIGatewayProxyHandler = async (event: { body: any }) => {
   try {
-    const body = JSON.parse(event.body || '{}');
+    const body : UserInput = JSON.parse(event.body || '{}');
 
     const { email, password } = body;
 
