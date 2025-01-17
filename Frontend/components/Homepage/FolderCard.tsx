@@ -86,6 +86,7 @@ export default function FolderCard({ jsonStructure, path }: { jsonStructure: Arr
             return <FileItem
             key = {item.id}
             fileName={item.name}
+            id={item.id}
             />
           }
         }

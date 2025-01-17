@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Text, View } from '../Themed';
 import MaterialIcons from '@expo/vector-icons/build/MaterialIcons';
 import { useRouter } from 'expo-router';
-import { State } from 'expo-router/build/fork/getPathFromState';
 
 const {width} = Dimensions.get("window")
 
@@ -14,7 +13,6 @@ interface pathStateProps{
   setPathState: React.Dispatch<React.SetStateAction<string[]>>
 }
 export default function FolderItem({ folderName, pathState, setPathState }: pathStateProps) {
-  const router = useRouter();
 
   const handlePress = (fileName: string) => {
     console.log("the folder "+ fileName + " is pressed!");

@@ -13,19 +13,33 @@ interface FileProps {
 }
 
 
-export default function FileItem({fileName}: {fileName:string}) {
+export default function FileItem({fileName, id}: { fileName: string, id: string }) {
   const router = useRouter();
 
-  const handlePress = (fileName: string) => {
-    let FileID = "69"
+  const handlePress = (fileName: string, id: string) => {
     console.log("the folder "+ fileName + " is pressed!");
+
+    //Connect to Websocket
+
+    //run API GetFile API (fileID) -> Content
+    let res: FileProps = {
+      fileName: fileName,
+      content: "Sample",
+      id: id
+    }
+    openEditor(res)
+  }
+
+  const openEditor = (file: FileProps) =>{
     router.push({
       pathname: '/User/Editor/[id]',
-      params: {id: FileID},
+      params: {id: file.id, fileName: file.fileName, content: file.content },
     });
   }
+
+
   return (
-    <TouchableOpacity style={styles.card} onPress={()=> handlePress(fileName)}>
+    <TouchableOpacity style={styles.card} onPress={()=> handlePress(fileName, id)}>
       <View style={styles.iconAndText}>
         <View style={styles.textBox}>
           <Text style={styles.title}>{fileName}</Text>

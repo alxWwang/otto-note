@@ -2,8 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import FolderItem from '@/components/Homepage/FolderItem';
-import { useLocalSearchParams, useSearchParams } from 'expo-router/build/hooks';
+import { useLocalSearchParams } from 'expo-router/build/hooks';
 
 interface FileProps {
   fileName:string,
