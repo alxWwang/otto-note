@@ -3,7 +3,7 @@ name: Deploy AWS CDK Stack
 on:
   push:
     branches:
-      - Naveen_Prabakar_Test 
+      - main 
 
 jobs:
   deploy:
