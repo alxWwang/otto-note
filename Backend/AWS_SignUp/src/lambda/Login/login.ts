@@ -24,9 +24,9 @@ export const handler: APIGatewayProxyHandler = async (event: { body: any }) => {
 
     const connection = await mysql.createConnection({
       host: process.env.RDS_ENDPOINT,
-      user: process.env.RDS_USERNAME,
+      user: 'admin',
       password: process.env.RDS_PASSWORD,
-      database: process.env.RDS_DATABASE_NAME,
+      database: 'otto',
     });
 
     const [rows] = await connection.execute(
